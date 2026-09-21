@@ -38,9 +38,8 @@ public class MassiveTrafficSimulation {
         );
     }
 
-    private static void processRequest(String userId) {
-        int current = successfulRequests;
-                Thread.yield();
-        successfulRequests = current + 1;
+    private static synchronized  void processRequest(String userId) {
+
+        successfulRequests++;
     }
 }
