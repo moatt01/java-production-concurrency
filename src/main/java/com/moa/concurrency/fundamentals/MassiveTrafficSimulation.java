@@ -4,9 +4,12 @@ package com.moa.concurrency.fundamentals;
 
 public class MassiveTrafficSimulation {
 
+    private static int successfulRequests = 0;
+
     public static void main(String[] args) throws InterruptedException {
 
-        int requestCount = 20;
+
+        int requestCount = 1_000;
 
         Thread[] threads = new Thread[requestCount];
 
@@ -26,32 +29,17 @@ public class MassiveTrafficSimulation {
             thread.join();
         }
 
-        System.out.println("All requests completed.");
+        System.out.println(
+                "Expected: " + requestCount
+        );
+
+        System.out.println(
+                "Actual: " + successfulRequests
+        );
     }
 
-    private static void processRequest(String userId) {
+    private static synchronized  void processRequest(String userId) {
 
-        System.out.println(
-                Thread.currentThread().getName()
-                        + " STARTED " + userId
-        );
-
-        try {
-
-            long delay =
-                    100 + (long) (Math.random() * 900);
-
-            Thread.sleep(delay);
-
-        } catch (InterruptedException e) {
-
-            Thread.currentThread().interrupt();
-            return;
-        }
-
-        System.out.println(
-                Thread.currentThread().getName()
-                        + " FINISHED " + userId
-        );
+        successfulRequests++;
     }
 }
