@@ -1,10 +1,11 @@
 package com.moa.concurrency.fundamentals;
 
 
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MassiveTrafficSimulation {
 
-    private static int successfulRequests = 0;
+    private static AtomicInteger successfulRequests = new AtomicInteger(0);
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -38,8 +39,8 @@ public class MassiveTrafficSimulation {
         );
     }
 
-    private static synchronized  void processRequest(String userId) {
+    private static void processRequest(String userId) {
 
-        successfulRequests++;
+        successfulRequests.incrementAndGet();
     }
 }
